@@ -1,34 +1,63 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import HomePage from "./pages/HomePage";
 import BlogPostsPage from "./pages/BlogPostsPage";
 import IndividualPostPage from "./pages/IndividualPostPage";
 import ContactPage from "./pages/ContactPage";
+import LoginPage from "./pages/LoginPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
-  //Each page is responsible for fetching its own data.
+  // Each page is responsible for fetching its own data.
   return (
     <ThemeProvider>
-      <BrowserRouter>
-        <div className="page">
-          <Header />
-          <main className="container content">
-            <Routes>
-              {/*home page*/}
-              <Route path="/" element={<BlogPostsPage />} />
+      <AuthProvider>
+        <BrowserRouter>
+          <div className="page">
+            <Header />
+            <main className="container content">
+              <Routes>
+                {/* Landing / Home page */}
+                <Route path="/" element={<HomePage />} />
 
-              {/*individual post page shows one post, its author, and comments*/}
-              <Route path="/post/:id" element={<IndividualPostPage />} />
+                {/* Login page */}
+                <Route path="/login" element={<LoginPage />} />
 
-              {/*contact page*/}
-              <Route path="/contact" element={<ContactPage />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </BrowserRouter>
+                {/* Protected blog posts page */}
+                <Route
+                  path="/posts"
+                  element={
+                    <ProtectedRoute>
+                      <BlogPostsPage />
+                    </ProtectedRoute>
+                  }
+                />
+
+                {/* Protected individual post page */}
+                <Route
+                  path="/post/:id"
+                  element={
+                    <ProtectedRoute>
+                      <IndividualPostPage />
+                    </ProtectedRoute>
+                  }
+                />
+
+                {/* Contact page (public) */}
+                <Route path="/contact" element={<ContactPage />} />
+
+                {/* Catch-all */}
+                <Route path="*" element={<p>Page not found.</p>} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </BrowserRouter>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

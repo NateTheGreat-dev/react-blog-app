@@ -1,25 +1,29 @@
 import React from "react";
 import CommentForm from "./CommentForm.jsx";
+import { useAuth } from "../context/AuthContext";
 
 export default function PostCard({
-  post,                //title, content, date
-  user,                //name, email or null while loading
-  comments = [],       //list of comments to show
-  onAddComment,        //function to call when the form submits
-  loadingAll = false,  //true while user comments are loading
-  postingComment = false, //true while we are sending a comment to the server
+  post,
+  user,               
+  comments = [],       
+  onAddComment,        
+  loadingAll = false,  
+  postingComment = false, 
 }) {
+  //check if the user is logged in, using our auth context
+  const { isAuthenticated } = useAuth();
+
   return (
     <article className="post-card">
-      {/*POST CONTENT*/}
+      {/* POST CONTENT */}
       <h2 className="post-title">{post.title}</h2>
       <p className="post-content">{post.content}</p>
 
-      {/*AUTHOR INFO*/}
+      {/* AUTHOR INFO */}
       <div className="meta">
         <div>
           <b>Author:</b>{" "}
-          {/*If user is still loading, show that*/}
+          {/* If user is still loading */}
           {user ? `${user.name} (${user.email})` : "Loading author…"}
         </div>
         <div>
@@ -27,17 +31,24 @@ export default function PostCard({
         </div>
       </div>
 
-      {/*COMMENTS SECTION*/}
+      {/* COMMENTS SECTION */}
       <section className="comments">
         <h3>Comments</h3>
 
-        {/*The form calls onAddComment({ name, text }) when submitted */}
-        <CommentForm
-          onAdd={(payload) => onAddComment && onAddComment(payload)}
-          disabled={postingComment}
-        />
+        {}
+        {isAuthenticated ? (
+          <CommentForm
+            onAdd={(payload) => onAddComment && onAddComment(payload)}
+            disabled={postingComment}
+          />
+        ) : (
+          <p className="muted">
+            You must be logged in to write a comment. Use the Login button at
+            the top of the page.
+          </p>
+        )}
 
-        {/*Show either loading, empty, or the actual list*/}
+        {/* Show either loading, empty, or the actual list */}
         {loadingAll && comments.length === 0 ? (
           <p>Loading comments…</p>
         ) : comments.length === 0 ? (
@@ -47,7 +58,7 @@ export default function PostCard({
             {comments.map((c) => (
               <li key={c.id} style={{ marginBottom: ".4rem" }}>
                 <b>{c.name || "Anonymous"}:</b> {c.body || c.text}
-                {/*Label temporary comments*/}
+                {/* Label temporary comments */}
                 {c._optimistic ? (
                   <em style={{ marginLeft: 8, color: "var(--muted)" }}>
                     (posting…)
