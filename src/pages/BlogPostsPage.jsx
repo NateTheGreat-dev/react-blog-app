@@ -60,67 +60,70 @@ export default function BlogPostsPage() {
 
   return (
     <div>
-      <h1>Blog Posts</h1>
+      <div element="section1">
+        <h1>Blog Posts</h1>
 
-      {/*Local create form*/}
-      <div className="post-card" style={{ marginBottom: "1rem" }}>
-        <h3>Create a new post</h3>
-        <form onSubmit={handleAddLocalPost} className="form-stack">
-          <input
-            className="comment-input"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <input
-            className="comment-input"
-            placeholder="Author (optional)"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-          />
-          <input
-            className="comment-input"
-            placeholder="Content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
-          <button className="btn" type="submit">Add Post</button>
-        </form>
+        {/*Local create form*/}
+        <div className="post-card" style={{ marginBottom: "1rem" }}>
+          <h3>Create a new post</h3>
+          <form onSubmit={handleAddLocalPost} className="form-stack">
+            <input
+              className="comment-input"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <input
+              className="comment-input"
+              placeholder="Author (optional)"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
+            />
+            <input
+              className="comment-input"
+              placeholder="Content"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+            <button className="btn" type="submit">Add Post</button>
+          </form>
+        </div>
       </div>
+      <div element="section2">
+        {/*Show messages while loading or on errors*/}
+        {loading && <p>Loading posts…</p>}
+        {!loading && errorMsg && (
+          <p style={{ color: "crimson" }}>{errorMsg}</p>
+        )}
 
-      {/*Show messages while loading or on errors*/}
-      {loading && <p>Loading posts…</p>}
-      {!loading && errorMsg && (
-        <p style={{ color: "crimson" }}>{errorMsg}</p>
-      )}
+        {/*Render the list after loading*/}
+        <ul className="post-list">
+          {!loading &&
+            !errorMsg &&
+            posts.map((post) => (
+              <li key={post.id} className="post-card">
+                <h2 className="post-title">
+                  <Link to={`/post/${post.id}`}>{post.title}</Link>
+                </h2>
 
-      {/*Render the list after loading*/}
-      <ul className="post-list">
-        {!loading &&
-          !errorMsg &&
-          posts.map((post) => (
-            <li key={post.id} className="post-card">
-              <h2 className="post-title">
-              <Link to={`/post/${post.id}`}>{post.title}</Link>
-              </h2>
+                {/*body is the content the API gives us*/}
+                <p>{(post.body || "").slice(0, 120)}...</p>
 
-              {/*body is the content the API gives us*/}
-              <p>{(post.body || "").slice(0, 120)}...</p>
+                <div className="meta">
+                  <span>
+                    <b>Source:</b> posts
+                  </span>
+                </div>
 
-              <div className="meta">
-                <span>
-                  <b>Source:</b> posts
-                </span>
-              </div>
-
-              <div style={{ marginTop: ".5rem" }}>
-                <Link to={`/post/${post.id}`} className="btn btn-outline">
-                  Open
-                </Link>
-              </div>
-            </li>
-          ))}
-      </ul>
+                <div style={{ marginTop: ".5rem" }}>
+                  <Link to={`/post/${post.id}`} className="btn btn-outline">
+                    Open
+                  </Link>
+                </div>
+              </li>
+            ))}
+        </ul>
+      </div>
     </div>
   );
 }

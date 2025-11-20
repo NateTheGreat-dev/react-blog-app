@@ -30,21 +30,13 @@ export default function App() {
                 {/* Protected blog posts page */}
                 <Route
                   path="/posts"
-                  element={
-                    <ProtectedRoute>
-                      <BlogPostsPage />
-                    </ProtectedRoute>
-                  }
+                  element={<BlogPostsPage />}
                 />
 
                 {/* Protected individual post page */}
                 <Route
                   path="/post/:id"
-                  element={
-                    <ProtectedRoute>
-                      <IndividualPostPage />
-                    </ProtectedRoute>
-                  }
+                  element={<IndividualPostPage />}
                 />
 
                 {/* Contact page (public) */}
