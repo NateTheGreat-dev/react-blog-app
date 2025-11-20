@@ -46,7 +46,7 @@ ul, li {
 /*Base*/
 body {
   margin: 0;
-  background: linear-gradient(115deg, #ffffff, #d4dfed);
+  background: var(--bg);
   color: var(--fg);
   font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
@@ -457,4 +457,70 @@ html[data-theme="dark"] .contact-page textarea {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+}
+
+
+@media (max-width: 1024px) {
+  .post-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+
+@media (max-width: 640px) {
+  .post-list {
+    grid-template-columns: 1fr;
+  }
+
+  .post-card {
+    margin-inline: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-inline: 1rem;
+  }
+
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.5rem;
+  }
+
+  .nav a,
+  .nav .btn {
+    font-size: 0.9rem;
+    padding: 0.35rem 0.6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .comment-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .comment-input {
+    flex: 0 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .slideshow {
+    height: 260px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slideshow {
+    height: 220px;
+  }
 }
