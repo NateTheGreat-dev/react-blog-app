@@ -7,6 +7,7 @@ export default function HomePage() {
     <section className="home-page">
       <div className="home-inner">
         <Slideshow
+        //Images for slideshow
           images={[
             "assets/pexels-hungtran-3699434.jpg",
             "assets/pexels-jplenio-1423600.jpg",
@@ -23,7 +24,6 @@ export default function HomePage() {
           Use the buttons below to log in.
           You must log in to comment on blog posts!
         </p>
-
         <div className="home-actions">
           <Link to="/login" className="btn">
             Login
