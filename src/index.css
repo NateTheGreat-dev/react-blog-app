@@ -254,7 +254,7 @@ textarea:focus {
 
 /*Footer*/
 .site-footer {
-  margin-top: 1rem;
+  margin-top: auto;
   padding: 1rem 0;
   text-align: center;
   color: var(--footer-fg);
