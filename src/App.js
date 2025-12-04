@@ -27,13 +27,13 @@ export default function App() {
                 {/* Login page */}
                 <Route path="/login" element={<LoginPage />} />
 
-                {/* Protected blog posts page */}
+                {/* Blog posts page */}
                 <Route
                   path="/posts"
                   element={<BlogPostsPage />}
                 />
 
-                {/* Protected individual post page */}
+                {/* Individual post page */}
                 <Route
                   path="/post/:id"
                   element={<IndividualPostPage />}
